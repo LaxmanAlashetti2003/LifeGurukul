@@ -6,6 +6,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 
 const contactInfo = [
   {
@@ -41,14 +43,29 @@ export default function Contact() {
     message: ""
   });
 
+  const submitConsultationMutation = useMutation({
+    mutationFn: async (data: typeof formData) => {
+      return await apiRequest("POST", "/api/consultation-requests", data);
+    },
+    onSuccess: () => {
+      toast({
+        title: "Consultation Request Received!",
+        description: "We'll get back to you within 24 hours.",
+      });
+      setFormData({ name: "", email: "", phone: "", message: "" });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Submission Failed",
+        description: error.message || "Please try again later.",
+        variant: "destructive",
+      });
+    },
+  });
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    toast({
-      title: "Consultation Request Received!",
-      description: "We'll get back to you within 24 hours.",
-    });
-    setFormData({ name: "", email: "", phone: "", message: "" });
+    submitConsultationMutation.mutate(formData);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -133,9 +150,10 @@ export default function Contact() {
                   type="submit"
                   size="lg"
                   className="w-full"
+                  disabled={submitConsultationMutation.isPending}
                   data-testid="button-submit-consultation"
                 >
-                  Book Free Consultation
+                  {submitConsultationMutation.isPending ? "Submitting..." : "Book Free Consultation"}
                 </Button>
               </form>
             </Card>
