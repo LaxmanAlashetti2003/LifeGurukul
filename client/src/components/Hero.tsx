@@ -8,7 +8,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center bg-gradient-to-br from-background via-background to-muted/20">
+    <section id="hero" className="relative min-h-screen flex items-center bg-gradient-to-br from-background via-background to-muted/20">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20 w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="space-y-8">

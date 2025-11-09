@@ -3,19 +3,14 @@ import { Heart, Users, Brain, Briefcase, Globe, Zap } from "lucide-react";
 
 const segments = [
   {
-    icon: Heart,
-    title: "Health & Wellness",
-    description: "Physical, mental, and emotional well-being for a balanced life"
+    icon: Brain,
+    title: "Mind & Dreams",
+    description: "Mental clarity, personal growth, and achieving your aspirations"
   },
   {
     icon: Users,
     title: "Relationships",
     description: "Life partner, family, friends, and meaningful connections"
-  },
-  {
-    icon: Brain,
-    title: "Mind & Dreams",
-    description: "Mental clarity, personal growth, and achieving your aspirations"
   },
   {
     icon: Briefcase,
@@ -26,6 +21,11 @@ const segments = [
     icon: Globe,
     title: "Social Life",
     description: "Community involvement, social recognition, and responsibility"
+  },
+  {
+    icon: Heart,
+    title: "Health & Wellness",
+    description: "Physical, mental, and emotional well-being for a balanced life"
   },
   {
     icon: Zap,
