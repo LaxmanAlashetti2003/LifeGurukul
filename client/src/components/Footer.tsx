@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import { useLocation } from "wouter";
+import React from "react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -8,13 +10,30 @@ export default function Footer() {
     console.log(`${platform} link clicked`);
   };
 
+  const [location, setLocation] = useLocation();
+
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleNavClick = (e: React.MouseEvent, id: string, route = "/") => {
+    e.preventDefault();
+    if (location === route) {
+      scrollTo(id);
+    } else {
+      setLocation(route);
+      setTimeout(() => scrollTo(id), 150);
+    }
+  };
+
   return (
     <footer id="about" className="bg-card border-t">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div className="space-y-4">
             <h3 className="font-serif text-2xl font-bold text-foreground">
-              Transform Your Life
+              LifeGurukul <br /> Transform Your Life
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Expert solutions through Graphology, Vastu, Astrology & Numerology helping thousands achieve their dreams.
@@ -24,16 +43,25 @@ export default function Footer() {
           <div className="space-y-4">
             <h4 className="font-semibold text-foreground">Quick Links</h4>
             <ul className="space-y-2">
-              {['Home', 'Services', 'Testimonials', 'FAQ', 'Contact'].map((link) => (
-                <li key={link}>
-                  <button
-                    onClick={() => console.log(`Navigate to ${link}`)}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link}
-                  </button>
-                </li>
-              ))}
+              {['Home', 'Services', 'About', 'Contact'].map((link) => {
+                const idMap: Record<string, string> = {
+                  Home: 'hero',
+                  Services: 'services',
+                  About: 'about',
+                  Contact: 'contact',
+                };
+                const id = idMap[link] || 'hero';
+                return (
+                  <li key={link}>
+                    <button
+                      onClick={(e) => handleNavClick(e, id, '/')}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {link}
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -43,7 +71,7 @@ export default function Footer() {
               {['Graphology', 'Vastu Shastra', 'Astrology', 'Numerology'].map((service) => (
                 <li key={service}>
                   <button
-                    onClick={() => console.log(`View ${service}`)}
+                    onClick={(e) => handleNavClick(e, 'services', '/')}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
                     {service}
