@@ -32,7 +32,7 @@ export default function Hero() {
               </p>
             </div>
 
-            <div className="max-[412px]:p-14">
+            <div className="max-[300px]:p-14">
               <div className="flex flex-wrap gap-6 lg:gap-8">
                 <div className="text-center" data-testid="stat-lives-changed">
                   <div className="font-serif text-3xl md:text-4xl font-bold text-primary">
